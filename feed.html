@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feed</title>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <header id="header"></header>
+    <main class="max-w-4xl mx-auto py-10 px-4">
+      <a
+        href="create-post.html"
+        class="block text-center mb-6 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
+      >
+        Create New Post
+      </a>
+
+      <div id="posts-container" class="space-y-6"></div>
+    </main>
+    <script type="module" src="/src/js/feed.js"></script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

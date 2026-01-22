@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - SocialHub</title>
+  </head>
+  <body class="bg-slate-50 text-slate-800">
+    <header id="header"></header>
+    <main
+      class="mx-auto flex min-h-screen max-w-5xl flex-col items-center px-6 py-16"
+    >
+      <section class="w-full max-w-md space-y-8">
+        <div class="space-y-2 text-center">
+          <h1 class="text-3xl font-bold text-slate-900">Create your account</h1>
+          <p class="text-sm text-slate-600">
+            Fill in the fields below and join the SocialHub community today.
+          </p>
+        </div>
+        <form
+          id="register-form"
+          class="space-y-5 rounded-lg bg-white p-8 shadow"
+        >
+          <!-- Error messages container -->
+          <div
+            id="message-container"
+            class="hidden rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-700"
+          ></div>
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-slate-700" for="name"
+              >Name</label
+            >
+            <input
+              class="w-full rounded-md border border-slate-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Your name"
+              required
+            />
+          </div>
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-slate-700" for="email"
+              >Email</label
+            >
+            <input
+              class="w-full rounded-md border border-slate-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="example@stud.noroff.no"
+              required
+            />
+          </div>
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-slate-700"
+              for="password"
+              >Password</label
+            >
+            <input
+              class="w-full rounded-md border border-slate-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="At least 8 characters"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-700"
+          >
+            Sign up
+          </button>
+        </form>
+        <p class="text-center text-sm text-slate-600">
+          Already have an account?
+          <a
+            class="font-semibold text-blue-600 hover:underline"
+            href="login.html"
+            >Log in here</a
+          >.
+        </p>
+      </section>
+    </main>
+    <script type="module" src="/src/js/register.js"></script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
