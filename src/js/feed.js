@@ -12,10 +12,18 @@ async function loadFeed() {
     return;
   }
 
-  // Fetch posts from Supabase
+  // Fetch posts AND the connected profile username
   const { data: posts, error } = await supabase
     .from("posts")
-    .select("title, content, image_url, created_at")
+    .select(
+      `
+      title, 
+      content, 
+      image_url, 
+      created_at,
+      profiles ( username ) 
+    `,
+    )
     .order("created_at", { ascending: false });
 
   if (error) {
