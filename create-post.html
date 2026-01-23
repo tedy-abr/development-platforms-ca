@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Post - SocialHub</title>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <header id="header"></header>
+
+    <main class="max-w-2xl mx-auto py-10 px-4">
+      <div class="bg-white rounded-lg shadow-md p-8">
+        <div class="space-y-2 text-center mb-8">
+          <h1 class="text-3xl font-bold text-slate-900">Create a New Post</h1>
+          <p class="text-sm text-slate-600">
+            Share what's on your mind with the community.
+          </p>
+        </div>
+        <form id="create-post-form" class="space-y-6">
+          <div>
+            <label
+              for="post-title"
+              class="block text-sm font-medium text-slate-700"
+              >Title</label
+            >
+            <input
+              type="text"
+              id="post-title"
+              name="title"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="A catchy title for your post"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="post-body"
+              class="block text-sm font-medium text-slate-700"
+              >Content</label
+            >
+            <textarea
+              id="post-body"
+              name="body"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              rows="6"
+              placeholder="Write your post content here..."
+            ></textarea>
+          </div>
+          <div>
+            <label
+              for="post-media"
+              class="block text-sm font-medium text-slate-700"
+              >Image URL</label
+            >
+            <input
+              type="url"
+              id="post-media"
+              name="media"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+          <div id="message-container"></div>
+          <button
+            type="submit"
+            class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 disabled:bg-blue-400"
+          >
+            Publish Post
+          </button>
+        </form>
+      </div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/js/create-post.js"></script>
+  </body>
+</html>
