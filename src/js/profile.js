@@ -70,16 +70,21 @@ async function loadPosts(userId) {
   }
 
   posts.forEach((post) => {
-    const postElement = createPostElement(post, async (postId) => {
-      await deletePost(postId);
-    });
+    const postElement = createPostElement(
+      post,
+      async (postId) => {
+        await deletePost(postId);
+      },
+      (postId) => {
+        window.location.href = `/edit-post.html?id=${postId}`;
+      },
+    );
 
     postsContainer.appendChild(postElement);
   });
 }
 
 async function deletePost(postId) {
-  // A. Delete from Supabase
   const { error } = await supabase.from("posts").delete().eq("id", postId);
 
   if (error) {
