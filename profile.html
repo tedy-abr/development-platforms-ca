@@ -33,18 +33,30 @@
     </main>
 
     <template id="post-template">
-      <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
-        <div class="flex items-center mb-4">
-          <div
-            class="post-avatar w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-3"
-          ></div>
-          <div>
-            <div class="post-author font-semibold text-gray-800"></div>
-            <div class="post-date text-sm text-gray-500"></div>
+      <div
+        class="bg-white rounded-lg shadow p-6 border border-gray-200 relative"
+      >
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <div
+              class="post-avatar w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-3"
+            ></div>
+            <div>
+              <div class="post-author font-semibold text-gray-800"></div>
+              <div class="post-date text-sm text-gray-500"></div>
+            </div>
           </div>
+
+          <button
+            class="delete-btn hidden text-red-500 hover:text-red-700 font-bold text-sm border border-red-200 hover:bg-red-50 px-3 py-1 rounded transition"
+          >
+            Delete
+          </button>
         </div>
+
         <h2 class="post-title text-xl font-bold text-gray-800 mb-2"></h2>
         <p class="post-body text-gray-700 mb-4"></p>
+
         <div class="post-image-container hidden mb-4">
           <img
             class="post-image w-full h-64 object-cover rounded-lg"

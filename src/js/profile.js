@@ -1,12 +1,14 @@
 import { supabase } from "./supabase.js";
 import { createPostElement } from "../components/Post.js";
 
+// Select elements securely
 const profileNameEl = document.getElementById("profile-name");
 const profileEmailEl = document.getElementById("profile-email");
 const profileAvatarEl = document.getElementById("profile-avatar");
 const postsContainer = document.getElementById("profile-posts-container");
 
 async function loadProfile() {
+  // Check Login
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -31,15 +33,20 @@ async function loadProfile() {
   }
 
   const username = profile?.username || "Unknown User";
-
   profileNameEl.textContent = username;
   profileEmailEl.textContent = session.user.email;
   profileAvatarEl.textContent = username.charAt(0).toUpperCase();
 
+  await loadPosts(userId);
+}
+
+// Load post helper
+async function loadPosts(userId) {
   const { data: posts, error: postsError } = await supabase
     .from("posts")
     .select(
       `
+      id,
       title, 
       content, 
       image_url, 
@@ -63,9 +70,29 @@ async function loadProfile() {
   }
 
   posts.forEach((post) => {
-    const postElement = createPostElement(post);
+    const postElement = createPostElement(post, async (postId) => {
+      await deletePost(postId);
+    });
+
     postsContainer.appendChild(postElement);
   });
+}
+
+async function deletePost(postId) {
+  // A. Delete from Supabase
+  const { error } = await supabase.from("posts").delete().eq("id", postId);
+
+  if (error) {
+    alert("Error deleting post: " + error.message);
+    console.error("Delete error:", error);
+  } else {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session) {
+      await loadPosts(session.user.id);
+    }
+  }
 }
 
 loadProfile();
