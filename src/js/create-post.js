@@ -1,16 +1,8 @@
 import { supabase } from "./supabase.js";
-async function checkSession() {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+import { requireAuth, showErrorMessage } from "./utils.js";
 
-  if (!session) {
-    // If not logged in, redirect to login page
-    window.location.href = "/login.html";
-  }
-}
-// Run checkSession on page load
-checkSession();
+// Check if user is logged in
+requireAuth();
 
 const form = document.getElementById("create-post-form");
 const messageContainer = document.getElementById("message-container");
@@ -25,6 +17,7 @@ if (form) {
 
     // Clear old messages
     messageContainer.innerHTML = "";
+    messageContainer.classList.add("hidden");
 
     // Send data to Supabase
     const { error } = await supabase.from("posts").insert({
@@ -34,9 +27,8 @@ if (form) {
     });
 
     if (error) {
-      messageContainer.innerHTML = `<div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">${error.message}</div>`;
+      showErrorMessage(messageContainer, error.message);
     } else {
-      // Success redirect to Feed
       window.location.href = "/feed.html";
     }
   });

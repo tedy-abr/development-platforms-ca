@@ -1,7 +1,7 @@
 import { supabase } from "./supabase.js";
 import { createPostElement } from "../components/Post.js";
+import { requireAuth } from "./utils.js";
 
-// Select elements securely
 const profileNameEl = document.getElementById("profile-name");
 const profileEmailEl = document.getElementById("profile-email");
 const profileAvatarEl = document.getElementById("profile-avatar");
@@ -9,14 +9,8 @@ const postsContainer = document.getElementById("profile-posts-container");
 
 async function loadProfile() {
   // Check Login
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    window.location.href = "/login.html";
-    return;
-  }
+  const session = await requireAuth();
+  if (!session) return; // Stop if redirecting
 
   const userId = session.user.id;
 
@@ -29,9 +23,11 @@ async function loadProfile() {
 
   if (profileError) {
     console.error("Error loading profile:", profileError);
+    profileNameEl.textContent = "Error loading profile";
     return;
   }
 
+  // Update the Page Header
   const username = profile?.username || "Unknown User";
   profileNameEl.textContent = username;
   profileEmailEl.textContent = session.user.email;
@@ -40,7 +36,7 @@ async function loadProfile() {
   await loadPosts(userId);
 }
 
-// Load post helper
+// Helper function to load posts
 async function loadPosts(userId) {
   const { data: posts, error: postsError } = await supabase
     .from("posts")
@@ -59,6 +55,7 @@ async function loadPosts(userId) {
 
   if (postsError) {
     console.error("Error loading posts:", postsError);
+    postsContainer.textContent = "Error loading posts.";
     return;
   }
 
@@ -84,16 +81,14 @@ async function loadPosts(userId) {
   });
 }
 
+// Delete Logic
 async function deletePost(postId) {
   const { error } = await supabase.from("posts").delete().eq("id", postId);
 
   if (error) {
     alert("Error deleting post: " + error.message);
-    console.error("Delete error:", error);
   } else {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    const session = await requireAuth();
     if (session) {
       await loadPosts(session.user.id);
     }

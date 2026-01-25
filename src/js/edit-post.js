@@ -1,4 +1,5 @@
 import { supabase } from "./supabase.js";
+import { requireAuth, showErrorMessage } from "./utils.js";
 
 const form = document.getElementById("edit-post-form");
 const titleInput = document.getElementById("post-title");
@@ -14,15 +15,10 @@ if (!postId) {
   window.location.href = "/profile.html";
 }
 
+// Load the existing post data
 async function loadPostData() {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    window.location.href = "/login.html";
-    return;
-  }
+  const session = await requireAuth();
+  if (!session) return;
 
   // Fetch the specific post
   const { data: post, error } = await supabase
@@ -38,7 +34,7 @@ async function loadPostData() {
     return;
   }
 
-  // Security Check if the user owns the post
+  // Check if the logged-in user is the owner of the post
   if (post.user_id !== session.user.id) {
     alert("You are not authorized to edit this post.");
     window.location.href = "/feed.html";
@@ -52,25 +48,30 @@ async function loadPostData() {
 }
 
 // Handle the Update
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const updates = {
-    title: titleInput.value,
-    content: bodyInput.value,
-    image_url: mediaInput.value || null,
-  };
+    // Clear old errors
+    messageContainer.classList.add("hidden");
 
-  const { error } = await supabase
-    .from("posts")
-    .update(updates)
-    .eq("id", postId);
+    const updates = {
+      title: titleInput.value,
+      content: bodyInput.value,
+      image_url: mediaInput.value || null,
+    };
 
-  if (error) {
-    messageContainer.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
-  } else {
-    window.location.href = "/profile.html";
-  }
-});
+    const { error } = await supabase
+      .from("posts")
+      .update(updates)
+      .eq("id", postId);
+
+    if (error) {
+      showErrorMessage(messageContainer, error.message);
+    } else {
+      window.location.href = "/profile.html";
+    }
+  });
+}
 
 loadPostData();

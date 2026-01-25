@@ -1,18 +1,15 @@
 import { supabase } from "./supabase.js";
 import { createPostElement } from "../components/Post.js";
+import { requireAuth } from "./utils.js";
 
 const postsContainer = document.getElementById("posts-container");
 
 async function loadFeed() {
-  // Check if user is logged in
-  const { data } = await supabase.auth.getSession();
+  // Check Login using the helper
+  const session = await requireAuth();
+  if (!session) return;
 
-  if (!data.session) {
-    window.location.href = "/login.html";
-    return;
-  }
-
-  // Fetch posts AND the connected profile username
+  // Fetch posts
   const { data: posts, error } = await supabase
     .from("posts")
     .select(
@@ -38,6 +35,7 @@ async function loadFeed() {
     return;
   }
 
+  // Render posts
   postsContainer.innerHTML = "";
 
   posts.forEach((post) => {
