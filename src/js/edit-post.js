@@ -55,7 +55,7 @@ if (form) {
     const updates = {
       title: titleInput.value,
       content: bodyInput.value,
-      image_url: mediaInput.value || null,
+      image_url: mediaInput.value,
     };
 
     const { error } = await supabase

@@ -26,7 +26,7 @@ if (form) {
     const { error } = await supabase.from("posts").insert({
       title: title,
       content: content,
-      image_url: imageUrl || null,
+      image_url: imageUrl,
       user_id: session.user.id,
     });
 
