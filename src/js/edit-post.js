@@ -29,13 +29,13 @@ async function loadPostData() {
 
   if (error) {
     console.error("Error fetching post:", error);
-    window.location.href = "/profile.html";
+    window.location.href = "./profile.html";
     return;
   }
 
   // Check if the logged-in user is the owner
   if (post.user_id !== session.user.id) {
-    window.location.href = "/feed.html";
+    window.location.href = "./feed.html";
     return;
   }
 
@@ -66,7 +66,7 @@ if (form) {
     if (error) {
       showErrorMessage(messageContainer, error.message);
     } else {
-      window.location.href = "/profile.html";
+      window.location.href = "./profile.html";
     }
   });
 }

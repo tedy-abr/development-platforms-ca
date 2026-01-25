@@ -8,7 +8,7 @@ export async function requireAuth() {
   } = await supabase.auth.getSession();
 
   if (error || !session) {
-    window.location.href = "/login.html";
+    window.location.href = "./login.html";
     return null;
   }
 

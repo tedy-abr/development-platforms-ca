@@ -22,7 +22,7 @@ if (form) {
       // Use the helper
       showErrorMessage(messageContainer, "Invalid email or password.");
     } else {
-      window.location.href = "/feed.html";
+      window.location.href = "./feed.html";
     }
   });
 }

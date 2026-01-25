@@ -26,14 +26,14 @@ if (form) {
     const { error } = await supabase.from("posts").insert({
       title: title,
       content: content,
-      image_url: imageUrl,
+      image_url: imageUrl || null,
       user_id: session.user.id,
     });
 
     if (error) {
       showErrorMessage(messageContainer, error.message);
     } else {
-      window.location.href = "/feed.html";
+      window.location.href = "./feed.html";
     }
   });
 }
