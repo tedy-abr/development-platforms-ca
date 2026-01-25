@@ -19,7 +19,15 @@ export function createPostElement(post, onDelete = null, onEdit = null) {
   date.textContent = new Date(post.created_at).toLocaleString();
 
   const username = post.profiles?.username || "Unknown User";
-  author.textContent = username;
+
+  author.innerHTML = "";
+  const profileLink = document.createElement("a");
+  profileLink.href = `./profile.html?id=${post.user_id}`;
+  profileLink.textContent = username;
+  profileLink.className =
+    "hover:underline text-blue-600 font-medium cursor-pointer";
+  author.appendChild(profileLink);
+
   avatar.textContent = username.charAt(0).toUpperCase();
 
   if (post.image_url) {
@@ -29,15 +37,15 @@ export function createPostElement(post, onDelete = null, onEdit = null) {
     imgContainer.classList.add("hidden");
   }
 
+  // Handle Delete Button
   if (onDelete && deleteBtn) {
     deleteBtn.classList.remove("hidden");
     deleteBtn.addEventListener("click", () => {
-      if (confirm("Are you sure you want to delete this post?")) {
-        onDelete(post.id);
-      }
+      onDelete(post.id);
     });
   }
 
+  // Handle Edit Button
   if (onEdit && editBtn) {
     editBtn.classList.remove("hidden");
     editBtn.addEventListener("click", () => {

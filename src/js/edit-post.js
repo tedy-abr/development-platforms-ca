@@ -28,7 +28,6 @@ async function loadPostData() {
     .single();
 
   if (error) {
-    console.error("Error fetching post:", error);
     window.location.href = "./profile.html";
     return;
   }

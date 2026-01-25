@@ -14,6 +14,8 @@ async function loadFeed() {
     .from("posts")
     .select(
       `
+      id,
+      user_id,
       title, 
       content, 
       image_url, 
@@ -24,7 +26,6 @@ async function loadFeed() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.log("Error:", error);
     postsContainer.textContent = "Could not load posts.";
     return;
   }
