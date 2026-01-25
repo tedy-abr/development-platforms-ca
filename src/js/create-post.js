@@ -4,10 +4,10 @@ import { requireAuth, showErrorMessage } from "./utils.js";
 const form = document.getElementById("create-post-form");
 const messageContainer = document.getElementById("message-container");
 
-async function checkLogin() {
+async function onLoad() {
   await requireAuth();
 }
-checkLogin();
+onLoad();
 
 if (form) {
   form.addEventListener("submit", async (event) => {
@@ -20,10 +20,14 @@ if (form) {
     messageContainer.innerHTML = "";
     messageContainer.classList.add("hidden");
 
+    const session = await requireAuth();
+    if (!session) return;
+
     const { error } = await supabase.from("posts").insert({
       title: title,
       content: content,
       image_url: imageUrl,
+      user_id: session.user.id,
     });
 
     if (error) {

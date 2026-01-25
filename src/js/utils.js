@@ -1,9 +1,6 @@
 import { supabase } from "./supabase.js";
 
-/**
- * Check if the user is logged in.
- * Redirects to login if there is no session.
- */
+// Redirect to login if not authenticated
 export async function requireAuth() {
   const {
     data: { session },
@@ -18,11 +15,7 @@ export async function requireAuth() {
   return session;
 }
 
-/**
- * Show an error message in an element.
- * @param element - The HTML element to put the message in
- * @param message - The text to show
- */
+// Show error in the container
 export function showErrorMessage(element, message) {
   if (!element) return;
 
