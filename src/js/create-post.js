@@ -1,11 +1,13 @@
 import { supabase } from "./supabase.js";
 import { requireAuth, showErrorMessage } from "./utils.js";
 
-// Check if user is logged in
-requireAuth();
-
 const form = document.getElementById("create-post-form");
 const messageContainer = document.getElementById("message-container");
+
+async function checkLogin() {
+  await requireAuth();
+}
+checkLogin();
 
 if (form) {
   form.addEventListener("submit", async (event) => {
@@ -15,11 +17,9 @@ if (form) {
     const content = document.getElementById("post-body").value;
     const imageUrl = document.getElementById("post-media").value;
 
-    // Clear old messages
     messageContainer.innerHTML = "";
     messageContainer.classList.add("hidden");
 
-    // Send data to Supabase
     const { error } = await supabase.from("posts").insert({
       title: title,
       content: content,
